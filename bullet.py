@@ -4,26 +4,29 @@ import pygame
 BULLET_SPEED = 10
 BULLET_WIDTH = 5
 BULLET_HEIGHT = 15
+BULLET_COLOR = (255, 255, 0)  # Желтый
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-
+        
+        # Создание изображения
         self.image = pygame.Surface((BULLET_WIDTH, BULLET_HEIGHT))
-        self.image.fill((0, 0, 255))
+        self.image.fill(BULLET_COLOR)
         self.rect = self.image.get_rect()
-
-        # Позиция снаряда
+        
+        # Позиционирование пули
         self.rect.centerx = x
         self.rect.bottom = y
-
-        # Скорость
-        self.speed = -BULLET_SPEED # Отрицательное значение, чтобы снаряд летел вверх
+        
+        # Скорость движения (минус - движение вверх)
+        self.speed = -BULLET_SPEED
 
     def update(self):
-        # Двигаем снаряд вверх
+        """Обновление позиции пули"""
+        # Движение пули вверх
         self.rect.y += self.speed
-
-        # Удаляем снаряд, если он ушел за верхнюю границу экрана
+        
+        # Удаление пули при выходе за верхнюю границу
         if self.rect.bottom < 0:
             self.kill()
